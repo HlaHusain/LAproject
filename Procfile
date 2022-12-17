@@ -1,1 +1,1 @@
-web: gunicorn LA_API:app --workers=4
+web: gunicorn --chdir ./src main:app --workers=4
