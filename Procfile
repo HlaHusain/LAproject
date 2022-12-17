@@ -1,0 +1,1 @@
+web: gunicorn LA_API:app --workers=4
