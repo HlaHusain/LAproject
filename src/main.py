@@ -1,5 +1,5 @@
 from flask import Flask
-from mongodb import getStudent_Behaviour , getStudentmat
+from mongodb import find_students_behaviour , find_students_mat
 from students import Student
 
 app = Flask(__name__)
@@ -10,21 +10,17 @@ def home():
   return res
 
 
-@app.route("/Student_Behaviour", methods=['GET'])
-def getStudentBehaviour():
-  return getStudent_Behaviour()
+@app.route("/students/behaviour", methods=['GET'])
+def get_students_behaviour():
+  return find_students_behaviour()
 
-@app.route("/Student_mat", methods=['GET'])
-def getStudentmat1():
-  return getStudentmat()
+@app.route("/students/mat", methods=['GET'])
+def get_studenst_mat():
+  return find_students_mat()
 
-@app.route("/student1", methods=['GET'])
-def get_Students():
-    return Student.getStudent()
-
-
-
-
+@app.route("/students", methods=['GET'])
+def get_students():
+    return Student.find_students()
 
 
 if __name__ == '__main__':

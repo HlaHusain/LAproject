@@ -2,7 +2,7 @@
 from flask import request, json
 from pymongo import MongoClient
 from config import CONNECTION_STRING
-from mongodb import getStudent_Behaviour , getStudentmat
+from mongodb import find_students_behaviour , find_students_mat
 from bson import ObjectId, json_util
 
 client = MongoClient(CONNECTION_STRING)
@@ -12,7 +12,7 @@ student2 = client.LA_PROJECT['Student2']
 class Student:
 
 
-    def getStudent():
+    def find_students():
         try:
             print( json_util.dumps(student1.find()))
             return json_util.dumps(student1.find())
@@ -22,9 +22,9 @@ class Student:
             print(ex)
             return []    
 
-    def getStudent_Behaviour():
+    def find_students_behaviour():
             try:
-                return getStudent_Behaviour()
+                return find_students_behaviour()
             except Exception as ex:
                 print("[WARNING] some exception has occurred!")
                 print("Error in searching query, cause ")
@@ -34,7 +34,7 @@ class Student:
 
     def getStudentmat():
             try:
-                return getStudentmat()
+                return find_students_mat()
             except Exception as ex:
                 print("[WARNING] some exception has occurred!")
                 print("Error in searching query, cause ")
