@@ -9,14 +9,13 @@ from bson import ObjectId
 import json
 from functools import wraps
 from pymongo import MongoClient
-from pymongo.message import query
 from config import CONNECTION_STRING, AUTH_CONFIG
 import jwt
 from flask_cors import CORS
 
 app = Flask(__name__)
 CORS(app)
-client = MongoClient(CONNECTION_STRING, ssl=True, ssl_cert_reqs='CERT_NONE')
+client = MongoClient(CONNECTION_STRING)
 
 def token_required(f):
     @wraps(f)
