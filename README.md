@@ -10,7 +10,7 @@ In `MangoDB-setup`: </br>
 * `README.md`: explain about how to connect database
 * `myMongodb.py`: connect database
 
-OUr project has four parts: `Database/Backend API`, `Visualization`, `React JS`, `Machine Learning`</br>
+Our project has four parts: `Database/Backend API`, `Visualization`, `React JS`, `Machine Learning`</br>
 * ML parts use `Colaboratory`, and the link is in the following:
 ```
 https://colab.research.google.com/drive/1v8yvDmHJeOKDKETEX-pUuzJ24jgPjxl7?usp=sharing
