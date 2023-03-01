@@ -1,6 +1,6 @@
 # LAProject
 
-This repository is python part of program. There are 2 branches: `main` and `MangoDB-setup`
+*This* repository is python part of program. There are 2 branches: `main` and `MangoDB-setup`
 
 In `main` branches: </br>
 * `src`: Backends APIs related to database
