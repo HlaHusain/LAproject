@@ -1,0 +1,36 @@
+{
+  "name": "la_project",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
+    "@fontsource/roboto": "^4.5.8",
+    "@mui/icons-material": "^5.11.0",
+    "@mui/material": "^5.11.0",
+    "@mui/styled-engine-sc": "^5.11.0",
+    "@next/font": "13.0.7",
+    "axios": "^1.2.5",
+    "c3": "^0.7.20",
+    "d3": "^7.8.2",
+    "next": "13.0.7",
+    "react": "18.2.0",
+    "react-d3-library": "^1.1.8",
+    "react-dom": "18.2.0",
+    "react-hook-form": "^7.42.1",
+    "react-hooks": "^1.0.1",
+    "styled-components": "^5.3.6",
+    "xlsx": "^0.18.5"
+  },
+  "browser": {
+    "fs": false,
+    "os": false,
+    "path": false
+  }
+}
