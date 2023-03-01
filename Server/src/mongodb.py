@@ -90,7 +90,6 @@ def create_user():
     if (users.insert_one({
         "email": user['email'],
         "password": newPassword,
-
     })):
         return json.jsonify({'message': 'inserted successfully', "status": 200})
 
@@ -141,22 +140,6 @@ def signin():
     else:
         return json.jsonify({"error": "User not exists", "status": 400}), 400
 
-
-# def add_course():
-
-#     db = get_connection()
-#     courses = db.courses
-#     user_courses = request.json
- 
-#     for c in user_courses['courses']:
-#         # course = find_in_list
-#         if not (courses.insert_one({
-#             "course": c['course'],
-#             "credit": c['credit'],
-#         })): 
-#             return json.jsonify({"error": "Add Course failed"}), 400
-
-#     return json.jsonify({'message': 'inserted successfully', "status": 200})
 
 
 def find_in_list(list, filter):
@@ -234,11 +217,6 @@ def get_list_courses():
             })
 
     return rows
-    # for row in df:
-    #     rows.append(row)
-
-    # print(rows)
-    # return jsonify(rows)
 
 
 if __name__ == "__main__":

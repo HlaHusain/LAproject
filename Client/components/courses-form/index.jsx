@@ -187,6 +187,7 @@ export function CoursesForm({ token, score }) {
                   width: "50%",
                   p: 1.5,
                   background: "rgb(232, 164, 115)",
+                  "&:hover": { background: "rgb(232, 148, 115)" },
                   color: "#fff",
 
                   border: "0",
