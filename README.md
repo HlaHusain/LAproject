@@ -7,9 +7,9 @@
 ## Dataset Description
 Categorised based on 3 main datasets :
 
-Student Behavior Study​
-Courses and Credits​
-Students Information
+* Student Behavior Study​
+* Courses and Credits​
+* Students Information
 
 You could find the “Student Behavior Study​ ” dataset at this link : https://la-api.codeiin.com/students/behaviour
 
@@ -56,28 +56,29 @@ you need to install below requirements on our system:
 
 **For the server:**
 First Download Python-3.9.16
+
 you need to install the requirements on our system:
 
-pip install -r requirements.txt
+* pip install -r requirements.txt
 or
-pip3 install -r requirements.txt
+* pip3 install -r requirements.txt
 
 **Installation for Macbook M1** 
 
-brew install miniforge
-conda create -n sklearn-env -c conda-forge scikit-learn --file requirements.txt
-conda activate sklearn-env
+* brew install miniforge
+* conda create -n sklearn-env -c conda-forge scikit-learn --file requirements.txt
+* conda activate sklearn-env
 
 **How to Run :** 
 
-conda activate sklearn-env
-python ./src/main.py
+* conda activate sklearn-env
+* python ./src/main.py
 
 
 **For the Frontend:**
 
 To install the packages run :
-npm install
+* npm install
 
 Then, run the development server:
 npm run dev
