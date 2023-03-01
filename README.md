@@ -74,7 +74,6 @@ conda activate sklearn-env
 python ./src/main.py
 
 
-
 **For the Frontend:**
 
 To install the packages run :
