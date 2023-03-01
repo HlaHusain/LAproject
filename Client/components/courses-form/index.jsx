@@ -36,7 +36,7 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   },
 }));
 
-export function CoursesForm({ token , score }) {
+export function CoursesForm({ token, score }) {
   const [progress, setProgress] = React.useState();
   const { register, control, handleSubmit, reset, errors } = useForm({
     defaultValues: {
@@ -54,7 +54,7 @@ export function CoursesForm({ token , score }) {
   });
 
   const onSubmitCourses = async (data) => {
-    data = {...data , score}
+    data = { ...data, score };
     const diff = await getCourseDifficulty(data, token);
     setProgress(diff);
     setSuccess(true);
@@ -250,37 +250,25 @@ export function CoursesForm({ token , score }) {
               <Box sx={{ position: "relative", mb: 2, p: 2 }}>
                 <Typography
                   variant="h6"
+                  mb={1}
                   sx={{
                     color: "#404040",
                     display: "flex",
                     alignItems: "center",
                     fontWeight: "400",
-                    fontSize: 24,
+                    fontSize: 16,
                     background: "#fff",
                     borderRadius: "16px",
                   }}
                 >
-                  {field.course} : {field.difficulty}
+                  {field.course} , Score Difficulty : {field.difficulty}
                 </Typography>
 
                 <Box sx={{ flexGrow: 1 }}>
-                  <Box
-                    sx={{ display: "flex", justifyContent: "space-between" }}
-                  >
-                    <Typography
-                      sx={{
-                        color: "#D60000",
-                      }}
-                    >
-                      Harder
-                    </Typography>
-                    <Typography sx={{ color: "#00B50F" }}>Easier</Typography>
-                  </Box>
-
                   <BorderLinearProgress
                     variant="determinate"
                     value={field.difficulty}
-                    color={field.difficulty > 80 ? "success" : "error"}
+                    color={field.difficulty > 75 ? "error" : "success"}
                   />
                 </Box>
               </Box>
@@ -290,9 +278,13 @@ export function CoursesForm({ token , score }) {
           <Box sx={{ mt: 2 }}>
             <Button
               size="large"
-              variant="contained"
               type="button"
               onClick={tryAgain}
+              sx={{
+                background: "rgb(232, 164, 115)",
+                color: "#fff",
+                "&:hover": { background: "rgb(232, 148, 115)" },
+              }}
             >
               Try Again
             </Button>

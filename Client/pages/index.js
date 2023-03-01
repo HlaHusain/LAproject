@@ -3,9 +3,8 @@ import PropTypes from "prop-types";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
-import Divider from "@mui/material/Divider";
-import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
+import FormControl from "@mui/material/FormControl";
 
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -18,7 +17,6 @@ import AnalyticsIcon from "@mui/icons-material/Analytics";
 import ListAltIcon from "@mui/icons-material/ListAlt";
 import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
-import AddIcon from "@mui/icons-material/Add";
 import { BarChart, Description } from "@mui/icons-material";
 import { FormLabel, Grid, Stack, TextField } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
@@ -31,6 +29,11 @@ import { insert, predict } from "../api/insert";
 import Alert from "@mui/material/Alert";
 import { CoursesForm } from "../components/courses-form";
 import { Container } from "@mui/system";
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormGroup from "@mui/material/FormGroup";
+import Checkbox from "@mui/material/Checkbox";
 
 const Chart = dynamic(
   () => import("../components/chart").then((c) => c.Chart),
@@ -50,13 +53,11 @@ const ColorButton = styled(IconButton)(({ theme }) => ({
   borderRadius: "50%",
 }));
 
-function ResponsiveDrawer(props) {
-  const { window, userData,getUserData } = props;
+function Homepage(props) {
+  const { userData, getUserData } = props;
   const [prediction, setPrediction] = React.useState("");
-  const [mobileOpen, setMobileOpen] = React.useState(false);
-  const [success, setSuccess] = React.useState(false);
-  const[score , setScore] = React.useState()
-  // const [email, setEmail] = React.useState("");
+
+  const [localStorageScore, setLocalStoarageScore] = React.useState();
 
   const { logout, token } = useAuth();
 
@@ -76,65 +77,23 @@ function ResponsiveDrawer(props) {
     stressLevel: "1",
     pursueCareer: "1",
     Department_B_ISM: "1",
-    studyAnytime:"1",
   });
 
+  React.useEffect(() => {
+    const localStorageS = localStorage.getItem("score");
+    setLocalStoarageScore(localStorageS);
+  }, []);
 
   const onSubmit = async (e) => {
-    const res = await insert(data, token);
+    await insert(data, token);
+
     const prediction = await predict(data, token);
 
-    if (res.status === 200) setSuccess(true);
     localStorage.setItem("score", prediction.prediction);
-    setScore(score)
+
     setPrediction(prediction.prediction);
-    getUserData()
+    getUserData();
   };
-
-  const nominal = [
-    {
-      label: "Yes",
-      value: "1",
-    },
-    {
-      label: "No",
-      value: "0",
-    },
-  ];
-
-  const departments = [
-    {
-      label: "Yes",
-      value: "1",
-    },
-    {
-      label: "No",
-      value: "0",
-    },
-  ];
-
-  const pursueCareer = [
-    {
-      label: "100%",
-      value: "0",
-    },
-    {
-      label: "75%",
-      value: "1",
-    },
-    {
-      label: "50%",
-      value: "2",
-    },
-    {
-      label: "25%",
-      value: "3",
-    },
-    {
-      label: "0%",
-      value: "4",
-    },
-  ];
 
   const travellingTime = [
     {
@@ -168,54 +127,6 @@ function ResponsiveDrawer(props) {
     {
       label: "More Than 4 hour",
       value: "7",
-    },
-  ];
-
-  const gender = [
-    {
-      label: "Male",
-      value: "0",
-    },
-    {
-      label: "Female",
-      value: "1",
-    },
-  ];
-  const financial = [
-    {
-      label: "Fabulous",
-      value: "0",
-    },
-    {
-      label: "Good",
-      value: "1",
-    },
-    {
-      label: "Bad",
-      value: "2",
-    },
-    {
-      label: "Awful",
-      value: "3",
-    },
-  ];
-
-  const stress = [
-    {
-      label: "Fabulous",
-      value: "0",
-    },
-    {
-      label: "Good",
-      value: "1",
-    },
-    {
-      label: "Bad",
-      value: "2",
-    },
-    {
-      label: "Awful",
-      value: "3",
     },
   ];
 
@@ -262,31 +173,6 @@ function ResponsiveDrawer(props) {
               display: "flex",
             }}
           >
-            {/* <ListItem>
-              <Box
-                borderRadius={4}
-                sx={{
-                  background: "#eaedef",
-                  p: 1,
-                  display: "flex",
-                  alignItems: "center",
-                }}
-              >
-                <Box
-                  sx={{
-                    color: "black",
-                    whiteSpace: "nowrap",
-                    mr: 2,
-                  }}
-                >
-                  Create New Task
-                </Box>
-
-                <ColorButton size="small">
-                  <AddIcon sx={{ color: "#fff" }} />
-                </ColorButton>
-              </Box>
-            </ListItem> */}
             {navItems.map((nav, index) => (
               <ListItem key={nav.label} disablePadding>
                 <ListItemButton>
@@ -375,9 +261,10 @@ function ResponsiveDrawer(props) {
                 <Chart userData={userData} chartType={"Timeseries"} />
               </Box>
             </Box>
-{score && 
-            <CoursesForm token={token} score={score} />
-}
+
+            {localStorageScore && (
+              <CoursesForm token={token} score={localStorageScore} />
+            )}
           </Grid>
 
           <Grid item xs={4}>
@@ -408,12 +295,6 @@ function ResponsiveDrawer(props) {
                 borderRadius: "16px",
               }}
             >
-              {/* {success && (
-                <Alert sx={{ mb: 2 }} severity="success">
-                  User data updated successfully !
-                </Alert>
-              )} */}
-
               <Box
                 component="form"
                 autoComplete="off"
@@ -428,6 +309,7 @@ function ResponsiveDrawer(props) {
                     id="standard-size-small"
                     variant="outlined"
                     type="number"
+                    size="small"
                     onChange={(event) => {
                       setData({
                         ...data,
@@ -449,6 +331,7 @@ function ResponsiveDrawer(props) {
                   <Grid container>
                     <Grid item xs={6}>
                       <TextField
+                        size="small"
                         label="10th Mark"
                         id="standard-size-small"
                         variant="outlined"
@@ -459,16 +342,16 @@ function ResponsiveDrawer(props) {
                         InputProps={{ inputProps: { min: 0, max: 100 } }}
                         fullWidth
                         required
-                        sx={{ pr: 0.5 }}
                       />
                     </Grid>
                     <Grid item xs={6}>
                       <TextField
+                        size="small"
                         label="12th Mark"
                         id="standard-size-small"
+                        sx={{ pl: 1 }}
                         variant="outlined"
                         type="number"
-                        sx={{ pl: 0.5 }}
                         onChange={(event) => {
                           setData({ ...data, twelfthMark: event.target.value });
                         }}
@@ -480,6 +363,7 @@ function ResponsiveDrawer(props) {
                   </Grid>
 
                   <TextField
+                    size="small"
                     label="Social media & video"
                     id="standard-size-small"
                     variant="outlined"
@@ -500,6 +384,7 @@ function ResponsiveDrawer(props) {
                   />
 
                   <TextField
+                    size="small"
                     label="Travelling Time"
                     select
                     id="standard-size-small"
@@ -516,249 +401,148 @@ function ResponsiveDrawer(props) {
                       </MenuItem>
                     ))}
                   </TextField>
-
-                  <TextField
-                    id="outlined-select-Stress Level"
-                    select
-                    label="Stress Level"
-                    onChange={(event) => {
-                      setData({ ...data, stressLevel: event.target.value });
-                    }}
-                    defaultValue="1"
-                    required
+                  <FormControl
+                    sx={{ m: 3 }}
+                    component="fieldset"
+                    variant="standard"
                   >
-                    {stress.map((option) => (
-                      <MenuItem key={option.value} value={option.value}>
-                        {option.label}
-                      </MenuItem>
-                    ))}
-                  </TextField>
-
-                  <TextField
-                    id="outlined-select-Financial Status"
-                    select
-                    label="Financial Status"
-                    onChange={(event) => {
-                      setData({ ...data, financialStatus: event.target.value });
-                    }}
-                    defaultValue="1"
-                    required
+                    <FormLabel component="legend">Study time</FormLabel>
+                    <FormGroup row>
+                      {[
+                        ["studyAnytime", "Anytime"],
+                        ["studyMorning", "In the morning"],
+                        ["studyNight", "At night"],
+                      ].map(([name, label]) => (
+                        <FormControlLabel
+                          control={
+                            <Checkbox
+                              checked={data[name] === 1}
+                              defaultChecked
+                              onChange={(event) => {
+                                setData({
+                                  ...data,
+                                  [name]: event.target.checked ? 1 : 0,
+                                });
+                              }}
+                              name={name}
+                            />
+                          }
+                          label={label}
+                        />
+                      ))}
+                    </FormGroup>
+                  </FormControl>
+                  <FormControl
+                    sx={{ m: 3 }}
+                    component="fieldset"
+                    variant="standard"
                   >
-                    {financial.map((option) => (
-                      <MenuItem key={option.value} value={option.value}>
-                        {option.label}
-                      </MenuItem>
-                    ))}
-                  </TextField>
-
-                  <TextField
-                    label="Department_B_ISM"
-                    select
-                    id="standard-size-small"
-                    defaultValue="1"
-                    onChange={(event) => {
-                      setData({
-                        ...data,
-                        Department_B_ISM: event.target.value,
-                      });
-                    }}
-                    fullWidth
-                    required
+                    <FormLabel component="legend">Hoppies</FormLabel>
+                    <FormGroup row>
+                      {[
+                        ["videoGames", "Video games"],
+                        ["hobbiesCinema", "Cinema"],
+                        ["hobbiesSports", "Sports"],
+                      ].map(([name, label]) => (
+                        <FormControlLabel
+                          key={name}
+                          control={
+                            <Checkbox
+                              checked={data[name] === 1}
+                              defaultChecked
+                              onChange={(event) => {
+                                setData({
+                                  ...data,
+                                  [name]: event.target.checked ? 1 : 0,
+                                });
+                              }}
+                              name={name}
+                            />
+                          }
+                          label={label}
+                        />
+                      ))}
+                    </FormGroup>
+                  </FormControl>
+                  <FormControl
+                    sx={{ m: 3 }}
+                    component="fieldset"
+                    variant="standard"
                   >
-                    {departments.map((option) => (
-                      <MenuItem key={option.value} value={option.value}>
-                        {option.label}
-                      </MenuItem>
-                    ))}
-                  </TextField>
-
-                  <TextField
-                    label="Willingness to pursue a career based on their degree "
-                    select
-                    id="standard-size-small"
+                    <FormLabel component="legend">
+                      Check the following questions
+                    </FormLabel>
+                    <FormGroup>
+                      {[
+                        ["travellingTime", "I travel alot"],
+                        ["stressLevel", "I've high stress Level"],
+                        ["financialStatus", "I'm in good financial status"],
+                        ["Department_B_ISM", "Department_B_ISM"],
+                        [
+                          "pursueCareer",
+                          "Willing to pursue a career based on my degree",
+                        ],
+                      ].map(([name, label]) => (
+                        <FormControlLabel
+                          key={name}
+                          control={
+                            <Checkbox
+                              checked={data[name] === 1}
+                              defaultChecked
+                              onChange={(event) => {
+                                setData({
+                                  ...data,
+                                  [name]: event.target.checked ? 1 : 0,
+                                });
+                              }}
+                              name={label}
+                            />
+                          }
+                          label={label}
+                        />
+                      ))}
+                    </FormGroup>
+                  </FormControl>
+                  <FormLabel id="demo-row-radio-buttons-group-label">
+                    Gender
+                  </FormLabel>
+                  <RadioGroup
+                    row
+                    aria-labelledby="demo-row-radio-buttons-group-label"
                     defaultValue="1"
-                    onChange={(event) => {
-                      setData({ ...data, pursueCareer: event.target.value });
-                    }}
-                    fullWidth
-                    required
-                  >
-                    {pursueCareer.map((option) => (
-                      <MenuItem key={option.value} value={option.value}>
-                        {option.label}
-                      </MenuItem>
-                    ))}
-                  </TextField>
-
-                  <TextField
-                    label="Prefer to study in anytime"
-                    select
-                    id="standard-size-small"
-                    defaultValue="1"
-                    onChange={(event) => {
-                      setData({ ...data, studyAnytime: event.target.value });
-                    }}
-                    fullWidth
-                    required
-                  >
-                    {nominal.map((option) => (
-                      <MenuItem key={option.value} value={option.value}>
-                        {option.label}
-                      </MenuItem>
-                    ))}
-                  </TextField>
-
-                  <TextField
-                    label="Prefer to study in morning"
-                    select
-                    id="standard-size-small"
-                    defaultValue="1"
-                    onChange={(event) => {
-                      setData({ ...data, studyMorning: event.target.value });
-                    }}
-                    fullWidth
-                    required
-                  >
-                    {nominal.map((option) => (
-                      <MenuItem key={option.value} value={option.value}>
-                        {option.label}
-                      </MenuItem>
-                    ))}
-                  </TextField>
-
-                  <TextField
-                    label="Prefer to study at Night"
-                    select
-                    id="standard-size-small"
-                    defaultValue="1"
-                    onChange={(event) => {
-                      setData({ ...data, studyNight: event.target.value });
-                    }}
-                    fullWidth
-                    required
-                  >
-                    {nominal.map((option) => (
-                      <MenuItem key={option.value} value={option.value}>
-                        {option.label}
-                      </MenuItem>
-                    ))}
-                  </TextField>
-
-                  <TextField
-                    label="Gender Female"
-                    select
-                    id="standard-size-small"
-                    defaultValue="1"
+                    name="radio-buttons-group"
                     onChange={(event) => {
                       setData({ ...data, gender: event.target.value });
                     }}
-                    fullWidth
-                    required
                   >
-                    {gender.map((option) => (
-                      <MenuItem key={option.value} value={option.value}>
-                        {option.label}
-                      </MenuItem>
-                    ))}
-                  </TextField>
-
-                  <TextField
-                    label="Hobbies Video Games"
-                    select
-                    id="standard-size-small"
-                    defaultValue="1"
-                    onChange={(event) => {
-                      setData({ ...data, videoGames: event.target.value });
-                    }}
-                    fullWidth
-                    required
-                  >
-                    {nominal.map((option) => (
-                      <MenuItem key={option.value} value={option.value}>
-                        {option.label}
-                      </MenuItem>
-                    ))}
-                  </TextField>
-
-                  <TextField
-                    label="hobbies Cinema"
-                    select
-                    id="standard-size-small"
-                    defaultValue="1"
-                    onChange={(event) => {
-                      setData({ ...data, hobbiesCinema: event.target.value });
-                    }}
-                    fullWidth
-                    required
-                  >
-                    {nominal.map((option) => (
-                      <MenuItem key={option.value} value={option.value}>
-                        {option.label}
-                      </MenuItem>
-                    ))}
-                  </TextField>
-
-                  <TextField
-                    label="hobbiesSports"
-                    select
-                    id="standard-size-small"
-                    defaultValue="1"
-                    onChange={(event) => {
-                      setData({ ...data, hobbiesSports: event.target.value });
-                    }}
-                    fullWidth
-                    required
-                  >
-                    {nominal.map((option) => (
-                      <MenuItem key={option.value} value={option.value}>
-                        {option.label}
-                      </MenuItem>
-                    ))}
-                  </TextField>
+                    <FormControlLabel
+                      value="1"
+                      control={<Radio />}
+                      label="Female"
+                    />
+                    <FormControlLabel
+                      value="0"
+                      control={<Radio />}
+                      label="Male"
+                    />
+                  </RadioGroup>
 
                   <Box>
-                    {
-                      prediction && (
-                        // <Typography
-                        //   variant="h6"
-                        //   sx={{
-                        //     color: "#FA6F6F",
-                        //     display: "flex",
-                        //     alignItems: "center",
-                        //     fontWeight: "300",
-                        //     fontSize: 24,
-                        //     background: "#fff",
-                        //     borderRadius: "16px",
-                        //   }}
-                        // >
-                        <Alert
-                          sx={{ fontSize: 18, fontWeight: "500" }}
-                          severity="success"
-                        >
-                          Your predicted garade is {prediction}
-                        </Alert>
-                      )
-                      // </Typography>
-                    }
+                    {prediction && (
+                      <Alert
+                        sx={{ fontSize: 18, fontWeight: "500" }}
+                        severity="success"
+                      >
+                        Your predicted garade is {prediction}
+                      </Alert>
+                    )}
                   </Box>
 
-                  {/* <TextField
-                    label="Final grade"
-                    id="standard-size-small"
-                    variant="outlined"
-                    fullWidth
-                    onChange={(event) => {
-                      setData({ ...data, finalGrade: event.target.value });
-                    }}
-                    type="number"
-                  /> */}
-
                   <Button
-                    variant="outlined"
                     sx={{
-                      // width: "32ch",
                       p: 1,
                       background: "rgb(232, 164, 115)",
+                      "&:hover": { background: "rgb(232, 148, 115)" },
                       color: "#fff",
                       m: 1,
                       height: "6.5ch",
@@ -778,7 +562,7 @@ function ResponsiveDrawer(props) {
   );
 }
 
-ResponsiveDrawer.propTypes = {
+Homepage.propTypes = {
   /**
    * Injected by the documentation to work in an iframe.
    * You won't need it on your project.
@@ -786,22 +570,4 @@ ResponsiveDrawer.propTypes = {
   window: PropTypes.func,
 };
 
-export default ResponsiveDrawer;
-
-// const mark = {
-//   "10th Mark ": "85",
-//   "12th Mark   ": "74",
-//   "willingness to pursue a career based on their degree": "4",
-//   "Financial Status": "3",
-//   "Stress Level": " 1",
-//   "daily studing time ": " 1",
-//   "social medai & video": "1",
-//   "prefer to study in_Night": " 0",
-//   "Travelling Time": "7",
-//   Gender_Female: " 1",
-//   hobbies_Cinema: " 1",
-//   "prefer to study in_Anytime": "1",
-//   "Department_B.com ISM": "0",
-//   hobbies_Sports: "0",
-//   "prefer to study in_Morning": "0",
-// };
+export default Homepage;

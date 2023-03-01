@@ -183,7 +183,7 @@ def get_courses_difficulties():
         credit_factor = credit_factors.find_one({"credit": course["credit"]})
 
         if(credit_factor):
-            final_score = user_score + (user_score * float(credit_factor["n_ects"]))
+            final_score = float(user_score) + (float(user_score) * float(credit_factor["n_ects"]))
 
             final_scores.append({
                 "course": course["course"],
