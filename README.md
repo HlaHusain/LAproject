@@ -59,9 +59,9 @@ First Download Python-3.9.16
 
 you need to install the requirements on our system:
 
-* pip install -r requirements.txt
-or
-* pip3 install -r requirements.txt
+pip install -r requirements.txt
+### or
+pip3 install -r requirements.txt
 
 **Installation for Macbook M1** 
 
@@ -81,6 +81,6 @@ To install the packages run :
 * npm install
 
 Then, run the development server:
-npm run dev
+* npm run dev
 ### or
-yarn dev
+* yarn dev
