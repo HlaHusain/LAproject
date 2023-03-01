@@ -1,6 +1,6 @@
 # Project Overview
 
-![Getting Started](./images/logo.png)
+![Getting Started](images/logo.png)
 
 **Goal Evaluator** as tool for identification of problematic studying behaviour of students and advices on learning optimization
 
@@ -15,7 +15,7 @@ You could find the “Student Behavior Study​ ” dataset at this link : https
 
 ## project architecture
 
-![Getting Started](./images/architecture.png)
+![Getting Started](images/architecture.png)
 
 ## Implementation Technologies 
 
@@ -34,7 +34,7 @@ This project is based on the following technologies:
  * Database
    * mongoDB
 
-![Getting Started](./images/Technologies.png)
+![Getting Started](images/Technologies.png)
 
 
 ## Machine Learning Pipeline
@@ -46,8 +46,8 @@ This project is based on the following technologies:
 All Visualisation chart is built using:
 C3/D3.js
 
-![Getting Started](./images/Visualisation.png)
-![Getting Started](./images/Visualisation1.png)
+![Getting Started](images/Visualisation.png)
+![Getting Started](images/Visualisation1.png)
 
 
 
