@@ -47,8 +47,8 @@ import pandas as pd
 import requests
 import json
 import numpy as np 
-import seaborn as sns #Vizualisation
-import matplotlib.pyplot as plt #Vizualisation    
+import seaborn as sns
+import matplotlib.pyplot as plt   
 
 **Phases**
 
