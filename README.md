@@ -39,7 +39,25 @@ This project is based on the following technologies:
 
 ## Machine Learning Pipeline
 
+Machine Learning with sklearn, pandas.
+To run the  code you need to import standard libraries for data preparation and analysis.
 
+import numpy as np
+import pandas as pd
+import requests
+import json
+import numpy as np 
+import seaborn as sns #Vizualisation
+import matplotlib.pyplot as plt #Vizualisation    
+
+**Phases**
+
+* Outlier Detection (LocalOutlierFactor)
+* Feature Selection (Feature Importances)
+* Model Selection 
+* Hyper Parameter Tuning on the RidgeRegression Model including KFold Cross Validation(GridSearchCV)
+  * Parameters to be optimize: param = { 'solver':['svd', 'cholesky', 'lsqr', 'sag'],'alpha': [1e-5, 1e-4, 1e-3, 1e-2, 1e-1, 1, 10, 100], 'fit_intercept':[True, False],'normalize':[True, False]}
+  * Optimization parameter: 'neg_mean_absolute_error'
 
 
 ## Visualisation

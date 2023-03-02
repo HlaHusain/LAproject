@@ -440,7 +440,6 @@ function Homepage(props) {
                     <FormLabel component="legend">Hoppies</FormLabel>
                     <FormGroup row>
                       {[
-                        ["videoGames", "Video games"],
                         ["hobbiesCinema", "Cinema"],
                         ["hobbiesSports", "Sports"],
                       ].map(([name, label]) => (
@@ -474,7 +473,6 @@ function Homepage(props) {
                     </FormLabel>
                     <FormGroup>
                       {[
-                        ["travellingTime", "I travel alot"],
                         ["stressLevel", "I've high stress Level"],
                         ["financialStatus", "I'm in good financial status"],
                         ["Department_B_ISM", "Department_B_ISM"],
