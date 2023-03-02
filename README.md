@@ -39,16 +39,16 @@ This project is based on the following technologies:
 
 ## Machine Learning Pipeline
 
-Machine Learning with sklearn, pandas.
+Machine Learning with sklearn, pandas. <br/>
 To run the  code you need to import standard libraries for data preparation and analysis.
 
-import numpy as np
-import pandas as pd
-import requests
-import json
-import numpy as np 
-import seaborn as sns
-import matplotlib.pyplot as plt   
+import numpy as np <br/>
+import pandas as pd <br/>
+import requests <br/>
+import json <br/>
+import numpy as np <br/>
+import seaborn as sns <br/>
+import matplotlib.pyplot as plt <br/> 
 
 **Phases**
 
