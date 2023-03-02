@@ -102,3 +102,11 @@ Then, run the development server:
 * npm run dev
 ### or
 * yarn dev
+
+
+## Group Members
+* Hla Abuhamra
+* Heiner Ploog
+* Hadil Khbaiz
+* Ruidan Liu
+* Yifei Yao
